@@ -3,10 +3,10 @@ module.exports = async (req, res) => {
   try {
     const b = req.body || {};
     const priceMap = {
-      Vanilla: 'price_1UMCYaBAG9LAVVPzCwpRETGK',
-      Chocolate: 'price_1UMCYaBAG9LAVVPzbT1Nxl5y',
-      Strawberry: 'price_1UMCYaBAG9LAVVPzaCSHffl5',
-      Funfetti: 'price_1UMCYaBAG9LAVVPzqwnkjkJ3'
+      Vanilla: 'price_1UMTGABAG9LAVVPzkzvSCFg7',
+      Chocolate: 'price_1UMTGCBAG9LAVVPzuql4C6qe',
+      Strawberry: 'price_1UMTGOBAG9LAVVPzkB6Mht8g',
+      Funfetti: 'price_1UMTGQBAG9LAVVPzRlh0KfSt'
     };
     if (!b.name || !b.email || !b.phone || !b.eventDate || !b.pickupDate || !b.pickupTime || !Array.isArray(b.items) || !b.items.length) return res.status(400).json({error:'Please complete all required fields.'});
     const params = new URLSearchParams();
