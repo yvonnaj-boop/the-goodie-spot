@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     Object.entries(meta).forEach(([k,v])=>params.set('metadata['+k+']',v));
     const r = await fetch('https://api.stripe.com/v1/checkout/sessions',{method:'POST',headers:{Authorization:'Bearer '+process.env.STRIPE_SECRET_KEY,'Content-Type':'application/x-www-form-urlencoded'},body:params});
     const data = await r.json();
-    if (!r.ok) return res.status(500).json({error:'Checkout could not be created.'});
+    if (!r.ok) return res.status(r.status >= 400 && r.status < 500 ? r.status : 500).json({error:data?.error?.message || 'Checkout could not be created.'});
     return res.status(200).json({url:data.url});
   } catch(e) { return res.status(500).json({error:e.message || 'Checkout could not be created.'}); }
 };
