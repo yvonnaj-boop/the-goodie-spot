@@ -13,8 +13,9 @@ module.exports = async (req, res) => {
     params.set('mode','payment');
     params.set('customer_email',b.email);
     params.set('phone_number_collection[enabled]','true');
-    params.set('success_url',(process.env.SITE_URL || 'http://localhost:3000') + '/?payment=success');
-    params.set('cancel_url',(process.env.SITE_URL || 'http://localhost:3000') + '/?payment=cancelled');
+    const siteUrl = process.env.SITE_URL || `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}`;
+    params.set('success_url',siteUrl + '/?payment=success');
+    params.set('cancel_url',siteUrl + '/?payment=cancelled');
     b.items.forEach((item,i)=>{
       if (!priceMap[item.flavor] || !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 5) throw new Error('Invalid flavor or quantity.');
       params.set('line_items['+i+'][price]',priceMap[item.flavor]);
